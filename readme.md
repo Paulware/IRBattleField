@@ -4,8 +4,8 @@ Parts
   ![$4 wheels](https://github.com/Paulware/IRBattleField/raw/master/images/wheels.jpg)
   [Get $4 wheels on ebay](http://www.ebay.com/itm/160840372337?ssPageName=STRK:MEWNX:IT&_trksid=p3984.m1439.l2649)
   
-Online videos that demonstrate usage:
-  [Huan Qi](http://www.youtube.com/watch?v=K-tgRfZG1ec)    
+Online videos:
+  [Huan Qi Tanks](http://www.youtube.com/watch?v=K-tgRfZG1ec)    
   
 Questions/Comments
   paulware@hotmail.com
