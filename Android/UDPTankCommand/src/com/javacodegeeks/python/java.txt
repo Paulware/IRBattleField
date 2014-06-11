@@ -1,0 +1,788 @@
+final String[] appIds = {"31","32","34","35","36","37","38","40","128","129"
+,"131","135","136","137","139","142","143","148","150","152","154","172","177","203","205","217"};
+
+final String[][] commandNames = { 
+  /* Registration*/
+{"1 MachineID","2 TerminalSerialNumber","9 RegistrationState",
+"10 PIN","11 ESN","19 CANDetectionComplete",
+"20 CommandedPIN","21 CommandedESN","22 CommandedMachineName",
+"23 CommandedVoltageSystem","29 CommandedChangesComplete","40 ReportedPIN",
+"41 ReportedESN","50 ValidatedPIN","51 RegisteredESN",
+"52 RegisteredMachineName","53 RegisteredVoltageSystem","54 RegisteredMake",
+"55 RegisteredModel","56 RegisteredType","70 GSM_IMEI",
+"71 GSM_IMSI","72 GSM_MDN","73 GSM_ICCID",
+"80 RegisteredGSM_IMEI","81 RegisteredGSM_IMSI","82 RegisteredGSM_MDN",
+"83 RegisteredGSM_ICCID","90 IridiumIMEI","100 RegisteredIridium_IMEI",
+"101 MachineRegistrationBlockTimestamp","102 RegistrationResultCode","103 BestLicenseTypeAvailable",
+"104 LicenseTypePurchased","105 ClearRegistration","110 COS_Status",
+"111 MobileCountryCode","112 COS_StatusConfirmed","113 COS_Commanded",
+"114 GSM_ExternalSIM_MDN","115 COS_ErrorCode"}
+,
+  /* Configuration*/
+{"1 MonitoredParamsOnCallInSatCapable","2 MonitoredParamsOnCallInCellOnly","3 MonitoredParamsOnChangeSatCapable",
+"4 MonitoredParamsOnChangeCellOnly","5 MonitoredParamsAlwaysMonitorOnChangeSatCapable","6 FlushDirtyCache"}
+,
+  /* ChannelPing*/
+{"1 PingNetworkID","4 InitiatePing","9 LastPingRequestFromMWGTimestamp",
+"10 LastPingRequestFromMWGCorrelationID","11 TimestampOfPingTurnaroundAtHost","12 LastPingResponseFromHostCorrelationID",
+"13 LastPingRequestRxFromHostTimestamp","14 CorrelationIDOfLastPingReqFromHost"}
+,
+  /* GCL*/
+{"1 GCLWakeupIntervalMinutes"}
+,
+  /* TaskDeliveryApp*/
+{"1 WatchDogTimeout","2 MaximumRecordingSize","3 ToolIdentity",
+"4 CalLogLevels","5 CalEcuAccessLevel","6 CALEcuAccessLevelPassword",
+"7 CalSamplingRate","8 CalJDCommLoggingEnabled","9 PrimaryToolAddress",
+"10 PrimaryToolFunctionInstance","11 SecondaryToolAddress","12 SecondaryToolFunctionInstance",
+"13 CalDtcUpdateTimer","14 CalDM1Timeout","15 CalUniversalTimeout",
+"16 CalEngineHourMultiplier","17 CalIdmRecordingFrameLength","18 SuspendDelay",
+"19 TMCommandVersion","20 TMStatusVersion","21 TMUploadDtcVersion",
+"22 TMUploadRecordingVersion","36 SARStatus"}
+,
+  /* DataLogger*/
+{"1 CreateDetailedGranules","2 Create24HrSatGranules","3 Create25EngHrSatGranules",
+"4 MaxAlertNotificationsPerAlertTypePerKeyCycle","5 ConfigModelID","6 ConfigModel",
+"7 ConfigTimestamp","8 ConfigTypeId","9 UltimateOrHigherConfigAvailable",
+"10 SatelliteGranuleDuration","11 EngineHourGranuleDuration","12 EnableCropBasedGranule",
+"30 ReportConfigActionOnStartup","31 CorrelationIDToUseInConfigStatusTM","32 LastConfigChange",
+"33 LastConfigChangeTimestamp","34 ConfigLastLoadedDescription","35 ConfigLastLoadedTimestamp",
+"37 DataloggerErrorCount","38 SensorLowThreshold","39 SensorHighThreshold",
+"40 SensorIgnitionDelayOnColdBoot","41 SensorIgnitionDelayOnWakeFromSleep"}
+,
+  /* Reprogramming*/
+{"1 SoftwareVersionMajor","2 SoftwareVersionMinor","3 BuildNumber",
+"4 BuildDateTime","5 LastReprogrammingState","6 LastReprogrammingStateTimestamp",
+"7 ReprogrammingInfoString"}
+,
+  /* Diagnostics*/
+{"1 DeviceStateReportOnCallEnabled","2 CallResultDataEnabled","3 CPUHighLimit",
+"4 MemoryHighLimit","5 FlashFreeSizeLimit","6 SMSCarrierAlertAddress",
+"7 RAMDiskFreeSizeLimit"}
+,
+  /* CommServices*/
+{"1 CellCallInBaseTime","2 CellCallInRepeatInterval","3 CellCallInDays",
+"4 SatelliteCallInBaseTime","5 SatelliteCallInRepeatInterval","6 SatelliteCallInDays",
+"7 CommDeviceID","8 EnableEthernet","9 EnableGSM",
+"10 EnableIridium","11 ForceCall","12 SatelliteStayAwakePeriod",
+"13 EnvironmentID","14 AppIDOfMessagesToErase","15 MessagesEraseCommand",
+"16 MaxOutboxSize","17 EnableSMS","18 CarrierRegSatEscalationThreshold",
+"19 IncomingTransferExpirationThreshold","20 EnableFTSTransferModes","21 EnableWiFi",
+"22 NotifyCallStillOpenInterval","23 InitiateBlackout","24 SatelliteEscalationTime"}
+,
+  /* PowerManagement*/
+{"1 LastKeyOffTime","2 HibernateAfterKeyOffPeriod","3 StayAwakeAfterKeyOffPeriod",
+"4 LowVoltageHibernationThreshold","5 LowVoltageDuration","6 SleepReadinessPollBailout",
+"7 LongRunningOpLowVoltageThreshold_12V","8 LongRunningOpLowVoltageThreshold_24V","9 InferredVoltageSystem",
+"10 KeyState","11 EngineState","12 RawKeyState",
+"13 StayAwakeAfterKeyOffPeriod2"}
+,
+  /* DebugLogs*/
+{"1 DefaultLogLevelLimit","2 PrintscreenLogLevelLimit","3 MaxLogFileSize",
+"4 MaxTotalSizeOfLogFilesOnDisk","5 DeleteLogFilesOnSuccessfulQueuing","6 FlushQueueOnWarning",
+"7 FlushQueueOnAlert","8 LogBufferHighWatermark","9 KeepFileOpenBetweenWrites",
+"10 MaxAgeOfLogBufferEntries","11 OBD_SendLastDebugLog","12 MaxEventLogNotificationsPerKeyCycle",
+"13 AppIDCaptureToEventLog"}
+,
+  /* GSM*/
+{"1 GSMHostAddr","2 GSMHostPort","3 GSMUDPPort",
+"4 GSMMaxPacketSize","5 GSMWindowSize","6 GSMCallKeepAlive",
+"7 GSMPacketTimeoutTime","8 GSMMaxConsecutivePacketTimeouts","9 GSMPacketAckCoalesceWaitTime",
+"10 GSMTMAckCoalesceWaitTime","11 GSMReassemblyTimeout","12 GSMMinimumFragmentSize",
+"13 GSMAPN","15 GSMModemBandSelection","16 GSMUsername",
+"17 GSMPassword","18 GSMCarrierBan","19 GSMSessionIdleTime",
+"20 GSMModemNumberSoftResets","21 GSMModemNumberHardResets","22 GSMModemRATSelection",
+"23 GSMExternalSIMAPN","24 GSMExternalSIMUsername","25 GSMExternalSIMPassword",
+"26 GSMUseExternalSIM","27 GSMExternalSIMHostPort","28 GSMSimulateModem",
+"29 GSMOverrideCountryCode","30 GSMAllowRegistration"}
+,
+  /* Iridium*/
+{"4 IridiumMaxPacketSize","5 IridiumWindowSize","7 IridiumPacketTimeoutTime",
+"8 IridiumMaxConsecutivePacketTimeouts","9 IridiumPacketAckCoalesceWaitTime","10 IridiumTMAckCoalesceWaitTime",
+"11 IridiumReassemblyTimeout","12 IridiumMinimumFragmentSize"}
+,
+  /* Ethernet*/
+{"1 EthernetHostAddr","2 EthernetHostPort","3 EthernetUDPPort",
+"4 EthernetMaxPacketSize","5 EthernetWindowSize","7 EthernetPacketTimeoutTime",
+"8 EthernetMaxConsecutivePacketTimeouts","9 EthernetPacketAckCoalesceWaitTime","10 EthernetTMAckCoalesceWaitTime",
+"11 EthernetReassemblyTimeout","12 EthernetMinimumFragmentSize"}
+,
+  /* DiagnosticsAppReporting*/
+{"1 CellModemType","2 CellSIMStatus","3 EngineHoursAvailableOnCAN",
+"4 MiniGranuleCreationCount","5 GSMRegistrationState","8 SatelliteRegistrationState",
+"11 EngineTurnOnCount","12 KeyTurnOnCount","13 LastCAN1Status",
+"14 LastCAN2Status","15 LastCAN3Status","16 LastCAN4Status",
+"17 CPUOverLimit","18 RAMUsageOverLimit","19 FlashUsageOverLimit",
+"20 LastPowerManagerState","21 LastPowerManagerShutdownGraceful","22 LastAppsstartState",
+"23 LastAppsstartShutdownGraceful","24 RTCErrorAtStartup","25 RTCUnsynced",
+"26 KeyOnsSinceGoodFix","27 RegistrationChangeReason","28 LastCountedCellFailureDay",
+"29 CellCommFailureDays","30 LastCountedSatFailureDay","31 SatCommFailureDays",
+"32 CellModemErrors","35 SatelliteModemErrors","36 SatelliteModemAntennaFailure",
+"38 GPSError","39 GPSAntennaStatus","41 GSM_CallInProgress",
+"42 GSM_RSSIAtStart","43 GSM_CallBeginTimestamp","44 GSM_PositionAtStart_Latitude",
+"45 GSM_PositionAtStart_Longitude","46 GSM_GPSTimestampAtStart","47 GSM_AltitudeAtStart",
+"48 GSM_CallResult","49 GSM_CallDuration","50 SatelliteModemModelID",
+"51 SatelliteModemFirmwareVersion","52 CellularModemVersion","53 GSMSentKBytesLTD",
+"54 GSMReceivedKBytesLTD","55 IridiumSentKBytesLTD","56 IridiumReceivedKBytesLTD",
+"57 EthernetSentKBytesLTD","58 EthernetReceivedKBytesLTD","59 GSMSentPacketsLTD",
+"60 GSMReceivedPacketsLTD","61 IridiumSentPacketsLTD","62 IridiumReceivedPacketsLTD",
+"63 EthernetSentPacketsLTD","64 EthernetReceivedPacketsLTD","65 GSMFailedPacketsLTD",
+"66 GSMFailedKBytesLTD","67 IridiumFailedPacketsLTD","68 IridiumFailedKBytesLTD",
+"69 EthernetFailedPacketsLTD","70 EthernetFailedKBytesLTD","71 PowerOnKeyOnDurationLTD",
+"72 PowerOnKeyOffDurationLTD","73 SleepDurationLTD","74 LastPowerStateEntered",
+"75 FlashDiskAvailable","76 RAMDiskAvailable","77 RAMAvailable",
+"78 MaxCPUUtilization","79 IgnitionVoltage","80 DataLoggerConfigGUID",
+"81 ResetCount","82 BatteryVoltage","83 CAN1ActiveStatus",
+"84 CAN2ActiveStatus","85 CAN3ActiveStatus","86 CAN4ActiveStatus",
+"87 CAN1HVoltage","88 CAN1LVoltage","89 CAN2HVoltage",
+"90 CAN2LVoltage","91 CAN3HVoltage","92 CAN3LVoltage",
+"93 UltimateDataSinceKeyOn","94 FlashFreePercent","95 CPUFreePercent",
+"96 RAMFreePercent","97 CurrentSystemDateTime","98 LastGPSTimestamp",
+"99 GPSLatitude","100 GPSLongitude","101 IPAddressOfLastGPRSConnection",
+"102 DNSIPAddressOfLastGPRSConnection","103 GatewayIPAddressOfLastGPRSConnection","104 SatelliteModemPresent",
+"105 SatelliteRegisteredSignal","106 SatelliteSBDRegistered","107 SatelliteMessageIOTime",
+"108 NextCellCallTime","109 NextSatCallTime","110 GSMAntennaType",
+"112 LastGCLConfigUpdateTimestamp","113 MWGHardwarePartNumber","115 TPPPacketCount",
+"116 CAN4HVoltage","117 CAN4LVoltage","118 EngineRunFromCAN",
+"119 GSMOperator","120 GSM_RSSILastKnown","121 RAMDiskRestartCounter",
+"122 WiFiSentKBytesLTD","123 WiFiReceivedKBytesLTD","124 WiFiSentPacketsLTD",
+"125 WiFiReceivedPacketsLTD","126 WiFiFailedPacketsLTD","127 WiFiFailedKBytesLTD",
+"128 CellularTechnology"}
+,
+  /* TimeManager*/
+{"1 TZ_DaylightTimeStart","2 TZ_DaylightTimeEnd","3 TZ_DaylightOffsetMins",
+"4 TZ_StandardOffsetMins","5 LastTimeZoneOffset","6 LastMLT",
+"7 LastTLT","8 MLTTick","9 TLTTick",
+"10 IsTimeValid","11 LastMLTInTenthsOfHour","12 LastKnownCorrection"}
+,
+  /* DataloggerMonitor*/
+{"1 CPULimit","2 HighCPUDuration","3 RAMLimit"}
+,
+  /* HourMeter*/
+{"1 EngineHoursIsAvailableOnCAN","2 UserInputEngHoursInHundredths","3 HoursBeingCounted",
+"4 LastEngineHoursInHundredths"}
+,
+  /* PlatformCANServiceApp*/
+{"1 OriginalVehiclePIN","2 CommandedAddressBus0","3 CommandedAddressBus1",
+"4 DisableAutomaticMachineIdentification","5 StartInhibit","6 ForceShutdown",
+"7 ReportNetworkVandalism"}
+,
+  /* QualcommLegacy*/
+{"1 ServiceLevel","2 EngineSerialNumber"}
+,
+  /* GSMNetworkSimulator*/
+{"1 GSMNetworkSimEnable","2 RASDialFailurePercent","3 RASDialFailureSeconds",
+"4 RingAlertOccurPercent","5 RingAlertIntervalSeconds","6 SignalStrengthFailurePercent",
+"7 SignalStrengthFailureSeconds","8 RSSIMean","9 RSSIStandardDeviation"}
+,
+  /* BreadcrumbsApp*/
+{"1 EnableBreadcrumbFeature","2 BreadcrumbTimeInterval","3 MinimumDistance",
+"4 HeadingTrigger","5 HeadingTriggerDelay","6 MachineStateTriggerEnabled",
+"7 LogFuelLevelInBreadcrumb","8 LogMachineStateInBreadcrumb","10 MaxAcceptableAgeOfGPSFix",
+"11 DistanceFromLastCourseThreshold","12 MinElapsedTimeSinceLastBreadcrumbForHeadingTriggers","13 LocationHistoryReportPeriod",
+"14 LogCellularTechnologyInBreadcrumb","15 LogRSSIInBreadcrumb"}
+,
+  /* WiFiAdapter*/
+{"1 WiFiHostAddr","2 WiFiHostPort","3 WiFiUDPPort",
+"4 WiFiMaxPacketSize","5 WiFiWindowSize","7 WiFiPacketTimeoutTime",
+"8 WiFiMaxConsecutivePacketTimeouts","9 WiFiPacketAckCoalesceWaitTime","10 WiFiTMAckCoalesceWaitTime",
+"11 WiFiReassemblyTimeout","12 WiFiMinimumFragmentSize","13 WiFiGatewayAddr",
+"14 WiFiAccessPointSSID","15 WiFiAccessPointPassword"}
+,
+  /* ConnectedDeviceProxyApp*/
+{"1 CurrentlyConnectedDeviceSerialNumbers","2 LastHostAckTimestamp","3 ClearPersistedToDeviceTMs",
+"4 ForgetConnectedDeviceTimeout","5 AppIDStaticRegistrationList","6 ForgetTMTimeout",
+"7 OSPLStarted","8 StartDDS","9 MaxTMFileStorageSize",
+"10 WDTAllow","11 RawNMEAForwarding","12 ConnectedDeviceSerialNumberDeviceDiscovery",
+"13 ForgetConnectedDeviceTimeoutValue"}
+,
+  /* DebugInterface*/
+{"1 EnableDebugText","2 EnableDebugTextSocket","3 DebugTextPort",
+"4 EnableHostCommSnifferSocket","5 HostCommSnifferPort"}
+,
+  /* CANWANControl*/
+{"1 EnableCANWANControl"}
+};
+
+final String[][] commandDescriptions = {
+  /* Registration*/
+{"The machine ID as assigned by the host during the registration process.",
+"The serial number of the terminal.",
+"**0=Unknown, 1=Unregistered, 2=Pending, 3=Registered**",
+"The PIN (VIN) obtained from the CAN bus.",
+"The engine serial number obtained from the CAN bus.",
+"If set to true, the PlatformCANService/MachineIdentifier has determined that VIN and ESN interrogation is complete and the VIN and ESN have been written to the config params.",
+"The PIN (VIN) as set by an external service tool.",
+"The ESN as set by an external service tool.",
+"**Unicode**The machine name as set by an external service tool.",
+"The voltage system (12V or 24V) as set by an external service tool.",
+"**0=Nothing ever entered, 1=Values entered, 2=Registration in progress, 3=Registration complete**Set to 1 by the service tool after the other commanded parameters have been set to the values as specified by the service technician.",
+"The PIN sent by the host to acknowledge the PIN value obtained by the CAN bus and sent by the mobile.",
+"The ESN sent by the host to acknowledge the ESN value obtained by the CAN bus and sent by the mobile.",
+"The PIN (VIN) as determined by the host.",
+"The ESN as determined by the host.",
+"**Unicode**The machine name as determined by the host.",
+"The voltage system as determined by the host.",
+"**Unicode**The machine make as determined by the host.",
+"**Unicode**The machine model as determined by the host.",
+"**Unicode**The machine type as determined by the host.",
+"The IMEI acquired from the GSM modem.",
+"The IMSI acquired from the GSM modem.",
+"The MDN acquired from the GSM modem.",
+"The ICCID acquired from the GSM modem.",
+"The GSM IMEI as echoed by the host.",
+"The GSM IMSI as echoed by the host.",
+"The GSM MDN as echoed by the host.",
+"The GSM ICCID as echoed by the host.",
+"The IMEI acquired from the Iridium modem.",
+"The Iridium IMEI as echoed by the host.",
+"Timestamp of receipt of the machine registration block.",
+"Last registration code received from host.",
+"Must be 31 chars or less",
+"Must be 31 chars or less",
+"When set by OBD, it will clear registration information that had been received from the host.",
+"**0=Internal SIM Card Required, 1=Registration Successful, 2=Registration Pending, 3=Setup Unsuccessful**",
+"A 3 digit code indicating the country of operation for the device.",
+"Set to FALSE when COS_Status or mobilecountry code changes. Set to TRUE when the device receives a COS status response from the host confirming the current COS_status",
+"If TRUE, the device has been commanded to attempt to use external SIM information. If FALSE, the device should use the internal SIM.",
+"The MDN of the external SIM, used for COS. Needed so the host can send SMS to the device.",
+"**0=Success, 1=COS_ConfigMissingOrInvalid, 2=APN_Invalid, 3=MaxCallFailures, 4=SIM_Absent, 5=SIM_NotActivated, 6=SIM_Error, 7=SIM_PinRequired, 8=SIM_PukRequired, 9=SIM_Pin2Required, 10=SIM_Puk2Required, 11=PH_SIM_PinRequired, 12=SIM_IncorrectPassword**"
+},
+  /* Configuration*/
+{"Content of the ByteArray is: UInt16: Number of parameters, Begin Repeat, UInt16 AppID, UInt16 ParamID, End Repeat",
+"Content of the ByteArray is: UInt16: Number of parameters, Begin Repeat, UInt16 AppID, UInt16 ParamID, End Repeat",
+"Content of the ByteArray is: UInt16: Number of parameters, Begin Repeat, UInt16 AppID, UInt16 ParamID, End Repeat",
+"Content of the ByteArray is: UInt16: Number of parameters, Begin Repeat, UInt16 AppID, UInt16 ParamID, End Repeat",
+"Content of the ByteArray is: UInt16: Number of parameters, Begin Repeat, UInt16 AppID, UInt16 ParamID, End Repeat",
+"Set to true to cause ConfigApp to flush cached values to the config DB."
+},
+  /* ChannelPing*/
+{"**0=GTT, 1=Iridium, 2=GSM, 3=Ethernet, 4=WiFi, 255=NA**When sending a ping request, identifies the network on which to send the ping request to the host, and on which the host should send the response.",
+"Set this value to TRUE to initiate a ping. After queuing a ping to comm services, terminal will set the value back to 0.",
+"**UTC Time in Seconds**Timestamp at which MWG initiated a ping request.",
+"CorrelationID of last MWG ping request sent.",
+"**UTC Time in Seconds**When a ping response is received from the host, it contains the timestamp at which the host received the ping request from the MWG.",
+"Correlation ID of the last ping response received from the host.",
+"**UTC Time in Seconds**Timestamp of the last receipt of a ping request from the host by the MWG.",
+"Correlation ID of the last ping request received from the host by the MWG."
+},
+  /* GCL*/
+{"**Minutes**"
+},
+  /* TaskDeliveryApp*/
+{"**Seconds**The number of seconds to specify to watchdog when registering threads.",
+"**Bytes**The maximum size of a recording file, in bytes.",
+"The tool identity used by SAOnboard Diagnostics and Reprogramming.",
+"The log levels that will be written to the CAL Logs..",
+"The access level the CAL will request of the ECU on connection.",
+"The password to be used when requesting access to the ECU.",
+"**Milliseconds**The minimum period (in milliseconds) of time between data point updates (only for connections that support controlling this time)",
+"A flag indicating if JDComm logging is enabled for connections.",
+"The tool address used by SAOnboard Diagnostics and Reprogramming.",
+"The tool function instance used by SAOnboard Diagnostics and Reprogramming.",
+"The tool address used by SAOnboard Diagnostics for ECUs on CAN3 (the PowerTrain Bus).",
+"The function instance used by SAOnboard Diagnostics for ECUs on CAN3 (the PowerTrain Bus).",
+"**Milliseconds**The period (in milliseconds) between DTC request timeout checks.",
+"**Milliseconds**The number of milliseconds to wait for a broadcast DM1 message before requesting Active Codes.",
+"**Milliseconds**The number of milliseconds to wait before a message is treated as timed out.",
+"The value by which the engine timestamp is multiplied to convert to milliseconds.",
+"The default frame length used in a CAL recording for the IDM (not the IDM sampling rate).",
+"**Milliseconds**The number of milliseconds to wait after an ignition off occurs to determine if processing should suspend.",
+"Current version of the SAOnboardCommand message.",
+"Current version of the SAOnboardStatus message.",
+"Current version of the SAOnboardDTCUpload message.",
+"Current version of the SAOnboardRecordingUpload message.",
+"**0=no error, 1=CAL, 2=Reprogramming, 3=Power Manager, 4=Comm Services, 5=Watchdog, 6=Registration, 7=Platform CAN Service**Status of the SAOnboard Application."
+},
+  /* DataLogger*/
+{"If 1, Datalogger will create the detailed granules and send these via cell.",
+"If 1, Datalogger will create daily granules and send these with a routing class that also allows satellite transmission.",
+"If 1, Datalogger will create granules at 25 engine hour boundaries and send these with a routing class that also allows satellite transmission.",
+"The maximum number of times alert notifications are generated per key cycle per Alert/EventID.",
+"Integer ID ConfigModelID in the config loaded by the datalogger.",
+"ConfigModel string contained in the config.",
+"**UTC Time in Seconds**Timestamp from the DataLoggerConfigSetup TM. Represents the dattime at which th host sent the config to the terminal.",
+"**0=Unknown, 1=Default, 2=Default911, 3=Select, 4=ConfigWithoutCA, 5=ConfigWithCA**From XML config element",
+"Filled in by datalogger at startup.",
+"**Seconds**Duration of a satellite granule in seconds. ",
+"**Hours**Duration of an engine hour granule in hours.",
+"Enables logic in datalogger system executive that advances granules on crop change and puts the crop ID into the granule.",
+"Set by app that changed the config files (datalogger or datalogger monitor).",
+"Set by datalogger on receipt of config from CS (except in the case that the received TM has an earlier timestamp than one already received).",
+"**0=Unspecified, 1=Starting with default config, 2=Config from host, 3=Rollback to NonCA, 4=Rollback to 911, 5=Default due to loss of registration**See description of ReportConfigActionOnStartup.",
+"See description of ReportConfigActionOnStartup",
+"Changed by datalogger on successful load of a config.",
+"Updated by datalogger to the current system time on successful load of a config and on a wake/key on when a config has already been successfully loaded.",
+"Used to track the number of times Datalogger entered an error state during a single key cycle.",
+"**Units of 0.05 Volts**Threshold voltage below which input is regarded as low.",
+"**Units of 0.05 Volts**Threshold voltage above which input is regarded as high.",
+"**Seconds**Time duration to ignore sensor alerts on cold boot.",
+"**Seconds**Time duration to ignore sensor alerts on warm start (wake from sleep)."
+},
+  /* Reprogramming*/
+{"Set by Reprogramming app to the currently-running software version during startup.",
+"Set by Reprogramming app to the currently-running software version during startup.",
+"Set by Reprogramming app to the currently-running software version during startup.",
+"**UTC Time in Seconds**Set by Reprogramming app to the currently-running software version during startup.",
+"**0=Unknown, 1=ReprogrammingSuccessful, 2=PayloadTransferStarted, 3=PayloadProcessingStarted, 4=CorruptedPayload, 5=PayloadAuthenticationFailure, 6=WrongPayloadForDevice, 7=WrongPayloadForCurrentState, 8=PayloadExtractedRebootInitiated, 9=UnexpectedPayloadProcessingError**",
+"**UTC Time in Seconds**Set by Reprogramming app to the currently-running software version during startup.",
+"ASCII information about a reprogramming operaiton. Something that confirms to the user that if the reprogramming succeeded, the expectation is met. Can be blank."
+},
+  /* Diagnostics*/
+{"Indicates whether the Diagnostics App is enabled to send the Device State Report telematics message at each call-in.",
+"Indicates whether the Diagnostics App is enabled to send the Call Result Data telematics message for each cellular call attempt.",
+"**Percent**If the CPU use is above this limit for more than 30 sec, the CPUOverLimit flag will be set and remains set for the key cycle.",
+"**Percent**The total size of memory used in the sytem will be periodically checked. At any point, if memory used is greater than the limit, the MemoryOverLimit flag is set and will remain set for the key cycle.",
+"**Megabytes**Periodically, the available free space in the flash memory will be monitored. At any point, if it is less than the predefined limit, the FlashOverLimit param is set and remains set for the key cycle.",
+"MDN to which an SMS Carrier Alert message should be sent.",
+"**Megabytes**Periodically, the available free space in the RAM disk root (/) will be monitored."
+},
+  /* CommServices*/
+{"**Minutes**Daily call-in base time. Minutes since midnight UTC.",
+"**Minutes**Number of minutes between scheduled cellular call-in times (starting with CellCallInBaseTime).",
+"Bit field indicating which days the cell call-in schedule will be applied. A 1 indicates to call-in on that day. Multiple days can be set.",
+"**Minutes**Daily call-in base time. Minutes since midnight UTC.",
+"**Minutes**Number of minutes between scheduled cellular call-in times (starting with CellCallInBaseTime).",
+"Bit field indicating which days the cell call-in schedule will be applied. A 1 indicates to call-in on that day. Multiple days can be set.",
+"Used by communications services as the unique address of this device. ",
+"If true, allows messages to be sent on Ethernet adapter.",
+"If true, allows messages to be routed on GSM adapter.",
+"If true, allows messages to be routed on Iridium.",
+"When written to with a non-0 value, causes Comm Services to force a call. Comm Services sets the value back to 0 after the force call is recognized.",
+"**Minutes**This is the period of time that the satellite modem on the MWG will stay awake to listen for a ring alert.",
+"Environment ID of the host environment with which this MWG is communicating.",
+"Set by Service Advisor prior to initiating an erase (cancel) of queued messages from the MWG.",
+"Set to 1 by Service Advisor to trigger the cancellation of messages having the AppID AppIDOfMessagesToErase.",
+"**Bytes**Maximum size of the outbox, in bytes (as computed according to the sum of all outbound payload sizes and the sum of all outbound file sizes).",
+"If true, allows messages to be routed on SMS adapter.",
+"**Seconds**If the device is not currently registered with the GSM carrier network, this parameter specifies the minimum number of seconds that must pass between the last registration or boot time (whichever is more recent) before a TM that is eligible to be sent over both GSM and Iridium may be escalated to Iridium.",
+"**Seconds**Specifies the amount of time in seconds comm services shall allow an incoming file transfer to remain idle (i.e. no TMs related to the transfer received) before cancelling the transfer.",
+"**0=TPP Only, 1=Atomos with TPP fallback**Indicates which FTS transfer modes are enabled.",
+"If true, allows messages to be sent on WiFi adapter.",
+"**Seconds**The amount of time to wait, in seconds, while a call is active, before sending a notification that the call is still active.",
+"If TRUE, Comm Services must only send TMs with blackout override specified in their metadata.",
+"The amount of time to wait, in seconds, before a TM that can escalate to satellite due to age will do so."
+},
+  /* PowerManagement*/
+{"**UTC Time in Seconds**",
+"**Seconds**Duration from the time of key off to when the MWG will attempt to hibernate (lowest power mode).",
+"**Seconds**(Deprecated)Duration from the time of key off to when the MWG will attempt to sleep, assuming applications / services on the device have completed their own processing.",
+"**1/100ths of Volts**When the MWG senses an input voltage lower than this value for LowVoltageDuration, the MWG will attempt to hibernate if key is off.",
+"**Seconds**Low Voltage Duration range for both 12 and 24 volt systems should be between 1 and 999 seconds.",
+"**Seconds**Max time to allow applications to push off transition to sleep.",
+"**1/100ths of Volts**The voltage below which long running operations such as controller reprogramming should not be started.",
+"**1/100ths of Volts**The voltage below which long running operations such as controller reprogramming should not be started.",
+"**0=Unknown, 12=12V system, 24=24V system**",
+"**0=unknown, 1=off, 2=on**The state of the ignition, as broadcast to applications via IVS messaging.",
+"**0=unknown, 1=off, 2=on**EngineDetection from PlatformCANSvc or analog voltage.",
+"**0=unknown, 1=off, 2=on**The current state of the ignition as read from the BSP (no power manager hysteresis applied).",
+"**Seconds**Duration from the time of key off to when the MWG will attempt to sleep, assuming applications / services on the device have completed their own processing."
+},
+  /* DebugLogs*/
+{"**0=SystemDefault, 1=Reserved, 2=Reserved, 3=OpEvent_Modification, 4=OpEvent_CriticalEvent, 5=Diagnostic_Header, 6=Alert, 7=Warning, 8=Notice, 9=Debug, 10=Debug2**This default is used only if there is no source specific limit that applies to a particular log message, or the source-specific limit indicates to use the system-wide log level.",
+"**0=SystemDefault, 1=Reserved, 2=Reserved, 3=OpEvent_Modification, 4=OpEvent_CriticalEvent, 5=Diagnostic_Header, 6=Alert, 7=Warning, 8=Notice, 9=Debug, 10=Debug2**Any log entries equal to or more critical than this setting will be printed on screen.",
+"**Megabytes**Number of bytes required before the debug log advances to a new log file due to the reason of file size limit reached.",
+"**Megabytes**Number of bytes collected into log files together on the terminal.",
+"When responding to a log retrieval Telematics Message, delete the log file(s) that have been successfully queued.",
+"NOT USED - Should the log runtime write the buffered entries to disk immediately if a warning is received.",
+"NOT USED - Should the log runtime write the buffered entries to disk immediately to disk if an a log entry with logtype = alert is found. ",
+"NOT USED - The count of log entries to cache before writing them to disk because there are too many in cache.",
+"Should the logger keep the file open after a block of entries is written to disk. Keeping it open allows the OS to buffer the file, resulting in less flash wear. However, it is then prone to loss of data if there is a system crash. Applies to normal log file and alert only log file.",
+"NOT USED - **Seconds**If logging by applications is infrequent, the cache high watermark may not be reached for a long time. This param specifies the max duration between a file write operation and having unwritten log entries in the buffer. If this age is reached, the buffer is written to file.",
+"When set to 1, debugLogsOTA app takes a request to send the latest debug log file to the server and sets this param to 0.",
+"The maximum event log notifications sent to the host per key cycle. Any more will be logged as debug log entries only. The count resets on transition to key on.",
+"If non-zero, DebugLog entries for this AppID will be duplicated into EventLog."
+},
+  /* GSM*/
+{"Host FQDN or IP address to which TPP packets are sent.",
+"UDP port to which TPP packets are sent.",
+"Local UDP port on which MWG listens for TPP packets.",
+"**Bytes**Max TPP packet size to send.",
+"The TPP Window allows a new packet to be sent when (number of unacked packets < window size) AND (PacketID distance from oldest unacked packet to next packet < 120).",
+"**Seconds**Number of seconds of idle time during which to keep the GSM/GPRS data session open.",
+"**Milliseconds**Number of milliseconds after sending a TPP packet to wait for a TPP Packet Ack before considering the packet to have timed out.",
+"The number of consecutive TPP packet timeouts that trigger TPP to give up on the communication session with the host.",
+"**Milliseconds**The maximum time in milliseconds to wait after receiving a TPP packet before triggering the sending of a TPP packet that can contain the packet ack(s).",
+"**Milliseconds**The maximum time in milliseconds to wait after a received TM becomes acknowledgable before triggering the sending of a TPP packet that can contain the TM ack(s).",
+"**Milliseconds**The maximum time in milliseconds to retain received fragments for any single partially received TM in the expectation that the remaining fragments could still be received.",
+"**Bytes**The size of the smallest TM fragment that TPP is allowed to encode.",
+"APN string for making GSM/GPRS connections. Must be a string including leading and trailing  characters.",
+"**0=850 MHz mono-band, 1=900 MHz mono-band, 2=1800 MHz mono-band, 3=1900 MHz mono-band, 4=850/1900 MHz dual-band, 5=900/1800 MHz dual-band, 6=900/1900 MHz dual-band, 7=850/900/1800/1900 MHz quad-band**Frequency band to be used by the GSM modem.",
+"Username to be used for RasDial (PPP) authentication with the carrier.",
+"Password to be used for RasDial (PPP) authentication with the carrier.",
+"String that identifies a single GSM carrier that should be placed on the SIM\'s \'forbidden PLNM\' list so that the GSM Modem won\'t attempt to establish connection with the specified carrier. Only a single banned carrier is supported at a time by the terminal (note: a SIM may support 4 or more forbidden PLNMs).",
+"**Seconds**While a GSM call is open, this is the amount of time (in seconds) to wait after the last TPP packet was sent or received before starting a new TPP session.",
+"The number of soft resets on the GSM modem.  This value is cumulative.",
+"The number of hard resets on the GSM modem.  This value is cumulative.",
+"**0=Dual mode 3G preferred, 1=Dual mode GSM preferred, 2=Single mode 3G, 3=Single mode GSM**Selection of the Radio Access Technology. This value is only used for the u-blox quad-band modem (ignored by the Sierra Wireless modem).",
+"APN string for making GSM/GPRS connections with external SIM. Must be a string including leading and trailing  characters.",
+"Username to be used for RasDial (PPP) authentication with the carrier when using external SIM.",
+"Password to be used for RasDial (PPP) authentication with the carrier when using external SIM.",
+"If TRUE, Comm Services will attempt to use the external SIM versions for APN, Username, and Password. If FALSE, Comm Services will use the internal SIM versions.",
+"The Port for the external SIM host.",
+"If TRUE, Comm Services will use the simulated modem Socket connection. If FALSE, Comm Services will use the real modem serial connection.",
+"If TRUE, Comm Services will use the country code from the modem. If FALSE, the country code from the modem will be discarded for the current value in the DB.",
+"If FALSE, Comm Services will prevent modem from registering with network. If TRUE, registration will be attempted."
+},
+  /* Iridium*/
+{"**Bytes**Max TPP packet size to send.",
+"The TPP Window allows a new packet to be sent when (number of unacked packets < window size) AND (PacketID distance from oldest unacked packet to next packet < 120).",
+"**Milliseconds**Number of milliseconds after sending a TPP packet to wait for a TPP Packet Ack before considering the packet to have timed out.",
+"The number of consecutive TPP packet timeouts that trigger TPP to give up on the communication session with the host.",
+"**Milliseconds**The maximum time in milliseconds to wait after receiving a TPP packet before triggering the sending of a TPP packet that can contain the packet ack(s).",
+"**Milliseconds**The maximum time in milliseconds to wait after a received TM becomes acknowledgable before triggering the sending of a TPP packet that can contain the TM ack(s).",
+"**Milliseconds**The maximum time in milliseconds to retain received fragments for any single partially received TM in the expectation that the remaining fragments could still be received.",
+"**Bytes**The size of the smallest TM fragment that TPP is allowed to encode."
+},
+  /* Ethernet*/
+{"Host FQDN or IP address to which TPP packets are sent.",
+"UDP port to which TPP packets are sent.",
+"Local UDP port on which MWG listens for TPP packets.",
+"**Bytes**Max TPP packet size to send.",
+"The TPP Window allows a new packet to be sent when (number of unacked packets < window size) AND (PacketID distance from oldest unacked packet to next packet < 120).",
+"**Milliseconds**Number of milliseconds after sending a TPP packet to wait for a TPP Packet Ack before considering the packet to have timed out.",
+"The number of consecutive TPP packet timeouts that trigger TPP to give up on the communication session with the host.",
+"**Milliseconds**The maximum time in milliseconds to wait after receiving a TPP packet before triggering the sending of a TPP packet that can contain the packet ack(s).",
+"**Milliseconds**The maximum time in milliseconds to wait after a received TM becomes acknowledgable before triggering the sending of a TPP packet that can contain the TM ack(s).",
+"**Milliseconds**The maximum time in milliseconds to retain received fragments for any single partially received TM in the expectation that the remaining fragments could still be received.",
+"**Bytes**The size of the smallest TM fragment that TPP is allowed to encode."
+},
+  /* DiagnosticsAppReporting*/
+{"**0=modem absent, 1=Wavecom WMP-150 GSM modem**Presence and type of cell modem.",
+"**0=present and ok, 1=not present, 2=SIM error**Presence and status of SIM.",
+"Whether Engine Hours is being reported from CAN.",
+"Count of mini granules created by datalogger (3 min intervals).",
+"Whether registration is complete or pending for the GSM Modem.",
+"Whether registration is complete or pending for the satellite modem.",
+"Increments each time engine transitions from off to on. (Includes cases where we come out of sleep / hibernate and see that engine is already on)",
+"Increments each time key is turned on. (Includes cases where we come out of sleep / hibernate and see that key is already on)",
+"**0=No CAN activity, 1=250kHz, 2=500kHz**Updated only when key is on.",
+"**0=No CAN activity, 1=250kHz, 2=500kHz**Updated only when key is on.",
+"**0=No CAN activity, 1=250kHz, 2=500kHz**Updated only when key is on.",
+"**0=No CAN activity, 1=250kHz, 2=500kHz**Updated only when key is on.",
+"True if CPU use has been over a limit determined by engineering at any time since last key on.",
+"True if total system memory use has been over a limit determined by engineering at anytime since last key on.",
+"True if flash use in the system is over limit at any time since last key on. The limit is determined by engineering.",
+"**0=Unknown, 1=Starting, 2=Running, 3=Shutting down, 4=Shutdown, 5=Hibernate**Power manager updates this at any time it changes state.",
+"Set to True on startup if LastPowerManagerState was in (shutdown, hibernate).",
+"**0=Unknown, 1=Starting, 2=Running, 3=Shutting down, 4=Shutdown, 5=Hibernate**Power manager updates this at any time it changes state.",
+"Set to True on startup if LastAppsstartState was in (shutdown, hibernate).",
+"True if the RTC had not maintained the correct time at startup.",
+"True if RTC time at startup was suspect and there has been no time sync yet.",
+"Number of key ons since a good fix. Good fix is currently defined as a 2D or 3D fix.",
+"**0=No change pending, 1=CAN change, 2=ServiceTool change**",
+"When a cell call fails and results in incrementing the count of CellCommFailureDays, this timestamp is updated to today.",
+"Number of days that attempted cell calls have failed. Resets on successful send messages via cell, disabled cell.",
+"When a sat data exchange fails and results in incrementing the count of SatCommFailureDays, this timestamp is updated to today.",
+"Number of days that attempted sat data exchanges have failed. Resets on successful send messages via sat, disabled sat.",
+"**0=No error or cell not enabled, 1=Modem unresponsive, 2=No SIM, 3=Network registration error, 4=Unable to establish call for 10+ attempts with sufficient RSSI**Error in cell modem.",
+"**0=No error or sat not enabled, 1=Modem unresponsive, 2=Network registration error, 3=Unable to send for 10 or more attempts, with sufficient signal level, 4=Unable to retrieve message (which the sat says exists) for 10 or more attempts with sufficient signal level**",
+"If true, there is a problem with the satellite antenna.",
+"**0=No error, 1=GPS unresponsive, 2=engine on but no fix for 1 hour**Set if the GPS detects any errors",
+"**0=Unknown, 1=OK, 2=Short, 3=Open**",
+"",
+"",
+"",
+"**Degrees**-90 to +90.",
+"**Degrees**-180 to +180 degrees: E is positive, W is negative.",
+"Last known GPS timestamp is stored on receipt of CallAttempt notification with notificationType = CallBegin/CallSkipped.",
+"**Meters**Meters above / below sea level",
+"**DWV**",
+"**Seconds**",
+"Stored when the modem model ID is retrieved from the satellite modem; blanked if no modem present.",
+"Stored when the modem firmware version is retrieved from the satellite modem; blanked if no modem present.",
+"Stored when the modem version is retrieved from the cellular modem; blanked if no modem present.",
+"Terminal life-to-date Kbytes sent over GSM Network.",
+"Terminal life-to-date Kbytes received over GSM Network.",
+"Terminal life-to-date Kbytes sent over Iridium Network.",
+"Terminal life-to-date Kbytes received over Iridium Network.",
+"Terminal life-to-date Kbytes sent over Ethernet Network.",
+"Terminal life-to-date Kbytes received over Ethernet Network.",
+"Terminal life-to-date packets sent over GSM Network.",
+"Terminal life-to-date packets received over GSM Network.",
+"Terminal life-to-date packets sent over Iridium Network.",
+"Terminal life-to-date packets received over Iridium Network.",
+"Terminal life-to-date packets sent over Ethernet Network.",
+"Terminal life-to-date packets received over Ethernet Network.",
+"Terminal life-to-date packets failed over GSM Network.",
+"Terminal life-to-date Kbytes failed over GSM Network.",
+"Terminal life-to-date packets failed over Iridium Network.",
+"Terminal life-to-date Kbytes failed over Iridium Network.",
+"Terminal life-to-date packets failed over Ethernet Network.",
+"Terminal life-to-date Kbytes failed over Ethernet Network.",
+"**Seconds**Terminal life-to-date duration in Power-on-key-on power state.",
+"**Seconds**Terminal life-to-date duration in Power-on-key-off power state.",
+"**Seconds**Terminal life-to-date duration in Sleep power state.",
+"**0=Off, 1=Prestart, 2=On, 3=Polling for Sleep Readiness, 4=Preparing for Sleep, 5=Poll for Next Wake Time, 6=Sleep, 7=Polling for Hibernate Readiness, 8=Preparing To Hibernate, 9=Hibernate**Update on each power state transition.",
+"**KBytes**Total free flash space at last power state change.",
+"**KBytes**Total free RAM disk space at last power state change.",
+"**KBytes**Total free RAM at last power state change.",
+"**Percent**Max CPU utilization over any 30 second period leading up to the last power state change.",
+"**Hundredths of a Volt**The last sample of Ignition Voltage Monitor.",
+"GUID of config file in use. Updated when DataLogger loads a config file and parses Config GUID.",
+"Count of unexpected resets/powerups. Incremented at startup when Diagnostics App determines that the last shutdown was not graceful.",
+"**Hundredths of a Volt**LastSample of Unswitched power supply voltage.",
+"",
+"",
+"",
+"",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"This is updated by DiagnosticsApp at some convenient interval between 1 and 30 sec (or could be on demand).",
+"**Percent**Flash free percent at last power change.",
+"**Percent**Free CPU computed at 30 sec intervals.",
+"**Percent**Free RAM best computed on demand.",
+"**UTC Time in Seconds**Updated only in OBD mode.",
+"**UTC Time in Seconds**Timestamp of last good GPS fix. Updated once in 10 to 30 secs.",
+"**Degrees**Last good GPS fix. -90 to +90 degrees: N is positive, S is negative.",
+"**Degrees**Last good GPS fix. -180 to +180 degrees: E is positive, W is negative.",
+"IP address assigned to the MWG by the network. Byte order: high order byte (0xFF000000) expresses the first octet of the IP address.",
+"IP address of the DNS server provided when the network connection is established. Byte order: high order byte (0xFF000000) expresses the first octet of the IP address.",
+"IP address of the default gateway proovided by the network at connection. Byte order: high order byte (0xFF000000) expresses the first octet of the IP address.",
+"Set to true if any response is received from the satellite modem.",
+"Any signal > 0 is taken as registered signal. Updated when we get a new signal strength notification from the modem.",
+"Must be updated whenever modem status is monitored, including at key on, at intervals, at transmit session begin/end, etc. May use unsolicited notifications from modem.",
+"**UTC Time in Seconds**Timestamp of last packet received or last transmit confirmation (i.e. modem indicates successful handoff to satellite of a sent packet) using satellite modem.",
+"**UTC Time in Seconds**Updated when a next call time is calculated.",
+"**UTC Time in Seconds**Updated when a next call time is calculated.",
+"**0=Unknown, 1=US, 2=EU, 3=Short circuit, 4=Open circuit**",
+"**UTC Time in Seconds**Last from-host timestamp of an accepted Movement or Boundary or Engine Start alert setup.",
+"",
+"A count of TPP packets successfully sent or received over any channel.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"**Hundredths of a Volt**Read at some convenient interval between 1 and 30 sec.",
+"Set to true on receiving CAN EngineRPM messages first time after each boot.",
+"Written any time an operator notification is received from the modem.",
+"Written any time an RSSI notification is received from the modem.",
+"Incremented any time a shutdown is requested by Diagnostics App due to lack of space on RAMDisk root.",
+"Terminal life-to-date Kbytes sent over WiFi Network.",
+"Terminal life-to-date Kbytes received over WiFi Network.",
+"Terminal life-to-date packets sent over WiFi Network.",
+"Terminal life-to-date packets received over WiFi Network.",
+"Terminal life-to-date packets failed over WiFi Network.",
+"Terminal life-to-date Kbytes failed over WiFi Network.",
+"**0=Not registered, 1=2G GPRS, 2=2G EDGE, 3=3G WCDMA, 4=3G HSDPA, 5=3G HSUPA, 6=3G HSDPA/HSUPA**This value represents the cellular service availability at the current location."
+},
+  /* TimeManager*/
+{"**UTC Time in Seconds**Date and time at which daylight time begins for the terminal.",
+"**UTC Time in Seconds**Date and time at which daylight time ends for the terminal.",
+"**Minutes**Offset from UTC during daylight savings time.",
+"**Minutes**Offset from UTC during standard time.",
+"**Minutes**Last known offset from UTC. Loaded at startup to speed up messaging in case of unknown time.",
+"**Tenths of a Second**MLT (from MIG Linear Time) runs when the processor is running. During registration, host will bring up MLT to the highest known value for the machine, if the MLT in the device is not already at a higher value.",
+"**Tenths of a Second**Terminal linear time. Runs when the processor is running. Continuously increases for the device.",
+"Tick count for the last MLT.",
+"Tick count for the last terminal linear time",
+"",
+"Updated by time manager when LastMLT is updated by time manager in config store.",
+"When time correction is needed this value is set until the correction is applied.  This is not volatile since we may apply this correction at boot time in the case where updating the RTC failed before reboot."
+},
+  /* DataloggerMonitor*/
+{"**Percent**This is the ceiling on acceptable CPU usage by Datalogger before it is considered to be in a high CPU state.",
+"**Seconds**This is the ceiling on the length of time Datalogger can be in a high CPU state before it triggers a shutdown by DataloggerMonitor.",
+"**Megabytes**This is the ceiling on acceptable RAM usage by Datalogger before it triggers a shutdown by DataloggerMonitor."
+},
+  /* HourMeter*/
+{"**0=Unknown, 1=Yes, 2=No**Set by datalogger if the config has an Engine.Hours binary conversion.",
+"**Hundredths of Hour**Set by host via ConfigApp upon user input of new engine hours.",
+"When engine hour info is received from the datalogger, or the internal hour meter increases, remember the timestamp and set this parameter to true.",
+"Set by hour meter / service tool."
+},
+  /* PlatformCANServiceApp*/
+{"The End of line tool at some factories will write this string via OBD. Later, the MWG will need to return the value using OBD when requested.",
+"This value is written when a Commanded Address CAN message is received with a NAME matching that of the MTG on the vehicle bus.",
+"This value is written when a Commanded Address CAN message is received with a NAME matching that of the MTG on the implement bus.",
+"If set to true, the power-on identification of machine based on VIN, ESN will not take place.",
+"**0=No Inhibit, 1=Inhibit Level 1, 2=Inhibit Level 2**Set from the host to non-zero if the host wants to inhibit start of the machine according to the values listed. The startInhibit task will set a pattern in a regularly transmitted CAN message, based on the value of this parameter.",
+"When set to true the PlatformCANService does an immediate shutdown of the MTG.",
+"If true, the Network Antenna bits (SPN 520649) in CAN message Machine Control (PGN 0xFFF8 Command Byte 0x54) will report Not Working Properly regardless of antenna or SIM status."
+},
+  /* QualcommLegacy*/
+{"**1=Select, 2=Advanced, 3=Ultimate**",
+"20 Chars Max"
+},
+  /* GSMNetworkSimulator*/
+{"Enable/Disable Simulated GSM",
+"**Percent**",
+"**Seconds**",
+"**Percent**",
+"**Seconds**",
+"**Percent**",
+"**Seconds**",
+"",
+""
+},
+  /* BreadcrumbsApp*/
+{"Enables / disables the breadcrumb feature.",
+"**Seconds**Time in seconds since last breadcrumb point before another breadcrumb is logged automatically.",
+"**Meters**A displacement by this distance or greater from last point is required for a breadcrumb point to be logged when at least bread crumb time interval has elapsed since the last bread crumb record.",
+"**Degrees**A change (+/-) in heading by this angle or greater will cause a breadcrumb point to be logged. See HeadingTriggerDelay below. Set to zero to disable heading change trigger.",
+"**Seconds**Minimum time in seconds that the heading change must be above the limit to trigger a breadcrumb point.",
+"If true, a point is logged when the machine state changes.",
+"If true, fuel level is logged in each breadcrumb.",
+"If true, the machine state is logged in each breadcrumb.",
+"**Seconds**If the GPS fix is older than this, it is taken as invalid for breadcrumb purposes.",
+"**Meters**",
+"**Seconds**Minimum number of seconds that must pass since the last breadcrumb of any kind before triggering a breadcrumb based on heading.",
+"**Seconds**Number of seconds to wait between automatically sending Location History Reports at sufficient routing level to cause the device to call in.",
+"If true, cell technology is logged in each breadcrumb.",
+"If true, RSSI is logged in each breadcrumb."
+},
+  /* WiFiAdapter*/
+{"Host FQDN or IP address to which TPP packets are sent.",
+"UDP port to which TPP packets are sent.",
+"Local UDP port on which MWG listens for TPP packets.",
+"**Bytes**Max TPP packet size to send.",
+"The TPP Window allows a new packet to be sent when (number of unacked packets < window size) AND (PacketID distance from oldest unacked packet to next packet < 120).",
+"**Milliseconds**Number of milliseconds after sending a TPP packet to wait for a TPP Packet Ack before considering the packet to have timed out.",
+"The number of consecutive TPP packet timeouts that trigger TPP to give up on the communication session with the host.",
+"**Milliseconds**The maximum time in milliseconds to wait after receiving a TPP packet before triggering the sending of a TPP packet that can contain the packet ack(s).",
+"**Milliseconds**The maximum time in milliseconds to wait after a received TM becomes acknowledgable before triggering the sending of a TPP packet that can contain the TM ack(s).",
+"**Milliseconds**The maximum time in milliseconds to retain received fragments for any single partially received TM in the expectation that the remaining fragments could still be received.",
+"**Bytes**The size of the smallest TM fragment that TPP is allowed to encode.",
+"Used to specify the local address of the WiFi hardware that acts as a gateway to connect to WiFi hotspots.",
+"This is the SSID of the WiFi hotspot to connect to.",
+"This is the password of the WiFi hotspot to connect to."
+},
+  /* ConnectedDeviceProxyApp*/
+{"Serial number(s) of devices that are currently considered associated with the MTG.",
+"Host generated timestamp picked up from the last accepted TM ConnectedDeviceAcknowledgement.",
+"When set to 1 (intended by OBD), it will initiate the clearing of all TMs stored in the MTG for delivery to the connected device(s).",
+"**Seconds**When a connected device has not been seen by the MTG for this amount of key-on time, the MTG will remove any stored data related to that device, and the device will be no longer considered as connected to the MTG.",
+"**Comma separated list of decimal numbers**The Proxy App needs to register for certain AppIDs (ie. WDT) to ensure that TMs are stored even when there is no connected device.",
+"**Seconds**This is a maximum number of seconds to wait for a persisted TM to be delivered.",
+"When set to true, ospl (DDS) has been started. False means DDS has not been started.",
+"When set to true, the proxy app will signal to itself to start DDS.  (This should only occurs if the OSPL Started param (#7) is false.)",
+"**KBytes**Maximum amount of memory that the MTG will reserve for file transfers to/from host.",
+"Set to true when the host determines that Wireless Data Transfer is allowed via a Connected Device.",
+"Set to true to activate forwarding of Raw NMEA sentences to the connected device.",
+"Serial number of device(s) that are currently sending the DeviceDiscovery messages to MTG.",
+"When a connected device has not been seen by the MTG for the threshold time of Device Discovery (1 min), then the duration from then on for that device, is stored in this."
+},
+  /* DebugInterface*/
+{"Enable/Disable all debug text being output.",
+"Enable the TCP Socket for debug text instead of RS-232.",
+"Set the TCP Socket port to communicate on for debug text.",
+"Enable the TCP Socket for Host Communication TPP Traffic in order to sniff it in real time.",
+"Set the TCP Socket port to communicate on for Host Communication TPP Traffic."
+},
+  /* CANWANControl*/
+{" Upon being True (False), this parameter will enable (disable) the CANWAN service, so it could respond (ignore) the CAN message."
+}};
+
+final String[][] paramIds = {
+  /* Registration*/
+{"1","2","9","10","11","19","20","21","22","23","29","40","41","50","51","52","53","54","55","56","70","71","72","73","80","81","82","83","90","100","101","102","103","104","105","110","111","112","113","114","115"},
+  /* Configuration*/
+{"1","2","3","4","5","6"},
+  /* ChannelPing*/
+{"1","4","9","10","11","12","13","14"},
+  /* GCL*/
+{"1"},
+  /* TaskDeliveryApp*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","36"},
+  /* DataLogger*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","30","31","32","33","34","35","37","38","39","40","41"},
+  /* Reprogramming*/
+{"1","2","3","4","5","6","7"},
+  /* Diagnostics*/
+{"1","2","3","4","5","6","7"},
+  /* CommServices*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24"},
+  /* PowerManagement*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13"},
+  /* DebugLogs*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13"},
+  /* GSM*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30"},
+  /* Iridium*/
+{"4","5","7","8","9","10","11","12"},
+  /* Ethernet*/
+{"1","2","3","4","5","7","8","9","10","11","12"},
+  /* DiagnosticsAppReporting*/
+{"1","2","3","4","5","8","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","35","36","38","39","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","112","113","115","116","117","118","119","120","121","122","123","124","125","126","127","128"},
+  /* TimeManager*/
+{"1","2","3","4","5","6","7","8","9","10","11","12"},
+  /* DataloggerMonitor*/
+{"1","2","3"},
+  /* HourMeter*/
+{"1","2","3","4"},
+  /* PlatformCANServiceApp*/
+{"1","2","3","4","5","6","7"},
+  /* QualcommLegacy*/
+{"1","2"},
+  /* GSMNetworkSimulator*/
+{"1","2","3","4","5","6","7","8","9"},
+  /* BreadcrumbsApp*/
+{"1","2","3","4","5","6","7","8","10","11","12","13","14","15"},
+  /* WiFiAdapter*/
+{"1","2","3","4","5","7","8","9","10","11","12","13","14","15"},
+  /* ConnectedDeviceProxyApp*/
+{"1","2","3","4","5","6","7","8","9","10","11","12","13"},
+  /* DebugInterface*/
+{"1","2","3","4","5"},
+  /* CANWANControl*/
+{"1"}};
+
+final String[][] configTypes = {
+  /* Registration*/
+{"UINT32","STRING","UINT8","STRING","STRING","UINT8","STRING","STRING","STRING","UINT8","UINT8","STRING","STRING","STRING","STRING","STRING","UINT8","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","STRING","INT64","UINT32","STRING","STRING","BOOLEAN","UINT8","UINT16","BOOLEAN","BOOLEAN","STRING","UINT8"},
+  /* Configuration*/
+{"BYTEARRAY","BYTEARRAY","BYTEARRAY","BYTEARRAY","BYTEARRAY","BOOLEAN"},
+  /* ChannelPing*/
+{"UINT8","BOOLEAN","INT64","UINT32","INT64","UINT32","INT64","UINT32"},
+  /* GCL*/
+{"UINT16"},
+  /* TaskDeliveryApp*/
+{"UINT32","UINT32","STRING","STRING","UINT32","STRING","UINT32","BOOLEAN","UINT8","UINT16","UINT8","UINT16","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32"},
+  /* DataLogger*/
+{"UINT8","UINT8","UINT8","UINT32","UINT32","STRING","INT64","UINT8","BOOLEAN","UINT32","UINT32","BOOLEAN","BOOLEAN","UINT32","UINT8","INT64","STRING","INT64","UINT8","UINT16","UINT16","UINT16","UINT16"},
+  /* Reprogramming*/
+{"UINT16","UINT16","UINT32","INT64","UINT8","INT64","STRING"},
+  /* Diagnostics*/
+{"BOOLEAN","BOOLEAN","UINT8","UINT8","UINT16","STRING","UINT16"},
+  /* CommServices*/
+{"UINT16","UINT16","UINT8","UINT16","UINT16","UINT8","UINT32","BOOLEAN","BOOLEAN","BOOLEAN","BOOLEAN","UINT8","UINT8","UINT16","UINT8","UINT32","BOOLEAN","UINT16","UINT32","UINT8","BOOLEAN","UINT32","BOOLEAN","UINT32"},
+  /* PowerManagement*/
+{"INT64","UINT32","UINT32","UINT16","UINT16","UINT32","UINT32","UINT32","UINT8","UINT8","UINT8","UINT8","UINT32"},
+  /* DebugLogs*/
+{"UINT8","UINT8","UINT32","UINT32","BOOLEAN","BOOLEAN","BOOLEAN","UINT32","BOOLEAN","UINT16","BOOLEAN","UINT16","UINT16"},
+  /* GSM*/
+{"STRING","UINT16","UINT16","UINT16","UINT16","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT16","STRING","UINT8","STRING","STRING","STRING","UINT32","UINT32","UINT32","UINT8","STRING","STRING","STRING","BOOLEAN","UINT16","BOOLEAN","BOOLEAN","BOOLEAN"},
+  /* Iridium*/
+{"UINT16","UINT16","UINT32","UINT32","UINT32","UINT32","UINT32","UINT16"},
+  /* Ethernet*/
+{"STRING","UINT16","UINT16","UINT16","UINT16","UINT32","UINT32","UINT32","UINT32","UINT32","UINT16"},
+  /* DiagnosticsAppReporting*/
+{"UINT8","UINT8","BOOLEAN","UINT32","BOOLEAN","BOOLEAN","UINT32","UINT32","UINT8","UINT8","UINT8","UINT8","BOOLEAN","BOOLEAN","BOOLEAN","UINT8","BOOLEAN","UINT8","BOOLEAN","BOOLEAN","BOOLEAN","UINT8","UINT8","INT64","UINT32","INT64","UINT32","UINT8","UINT8","BOOLEAN","UINT8","UINT8","BOOLEAN","UINT8","INT64","DOUBLE","DOUBLE","INT64","UINT32","UINT8","UINT32","STRING","STRING","STRING","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT8","UINT32","UINT32","UINT32","UINT8","UINT16","STRING","UINT32","UINT16","BOOLEAN","BOOLEAN","BOOLEAN","BOOLEAN","UINT16","UINT16","UINT16","UINT16","UINT16","UINT16","BOOLEAN","UINT8","UINT8","UINT8","INT64","INT64","DOUBLE","DOUBLE","UINT32","UINT32","UINT32","BOOLEAN","BOOLEAN","BOOLEAN","INT64","INT64","INT64","UINT8","INT64","STRING","UINT32","UINT16","UINT16","BOOLEAN","STRING","UINT8","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT32","UINT8"},
+  /* TimeManager*/
+{"INT64","INT64","INT16","INT16","INT16","INT64","INT64","UINT32","UINT32","BOOLEAN","UINT32","INT64"},
+  /* DataloggerMonitor*/
+{"UINT8","UINT16","UINT8"},
+  /* HourMeter*/
+{"UINT8","UINT32","BOOLEAN","UINT32"},
+  /* PlatformCANServiceApp*/
+{"STRING","UINT8","UINT8","BOOLEAN","UINT8","UINT8","BOOLEAN"},
+  /* QualcommLegacy*/
+{"UINT8","STRING"},
+  /* GSMNetworkSimulator*/
+{"BOOLEAN","UINT16","UINT16","UINT16","UINT16","UINT16","UINT16","UINT16","UINT16"},
+  /* BreadcrumbsApp*/
+{"BOOLEAN","UINT16","UINT16","UINT8","UINT16","BOOLEAN","BOOLEAN","BOOLEAN","UINT16","UINT16","UINT16","UINT32","BOOLEAN","BOOLEAN"},
+  /* WiFiAdapter*/
+{"STRING","UINT16","UINT16","UINT16","UINT16","UINT32","UINT32","UINT32","UINT32","UINT32","UINT16","STRING","STRING","STRING"},
+  /* ConnectedDeviceProxyApp*/
+{"STRING","INT64","BOOLEAN","UINT32","STRING","UINT32","BOOLEAN","BOOLEAN","UINT32","BOOLEAN","BOOLEAN","STRING","BYTEARRAY"},
+  /* DebugInterface*/
+{"BOOLEAN","BOOLEAN","UINT32","BOOLEAN","UINT32"},
+  /* CANWANControl*/
+{"BOOLEAN"}};
+
+final String[] appNames = {
+"Registration","Configuration","ChannelPing","GCL","TaskDeliveryApp","DataLogger","Reprogramming","Diagnostics","CommServices","PowerManagement",
+"DebugLogs","GSM","Iridium","Ethernet","DiagnosticsAppReporting","TimeManager","DataloggerMonitor","HourMeter","PlatformCANServiceApp","QualcommLegacy",
+"GSMNetworkSimulator","BreadcrumbsApp","WiFiAdapter","ConnectedDeviceProxyApp","DebugInterface","CANWANControl"};

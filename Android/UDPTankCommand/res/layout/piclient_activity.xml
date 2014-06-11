@@ -1,0 +1,113 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ArduinoActivity" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_marginLeft="49dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btnUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="Up" />
+
+    <Button
+        android:id="@+id/btnLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/btnUp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="20dp"
+        android:text="Left" />
+
+    <Button
+        android:id="@+id/btnDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnLeft"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Down" />
+
+    <Button
+        android:id="@+id/btnRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnDown"
+        android:layout_alignParentRight="true"
+        android:text="Right" />
+
+    <Button
+        android:id="@+id/btnFire"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnDown"
+        android:layout_alignLeft="@+id/btnUp"
+        android:text="F" />
+
+    <Button
+        android:id="@+id/btnTurretLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/btnLeft"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="69dp"
+        android:text="Turret Left" />
+
+    <Button
+        android:id="@+id/btnTurretRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTurretLeft"
+        android:layout_alignBottom="@+id/btnTurretLeft"
+        android:layout_alignParentRight="true"
+        android:text="Turret Right" />
+
+    <Button
+        android:id="@+id/btnUpDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnTurretRight"
+        android:layout_alignLeft="@id/btnFire"
+        android:layout_toRightOf="@+id/btnTurretLeft"
+        android:text="Up/Down" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btnUpDown"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="false"
+        android:layout_toRightOf="@+id/btnTurretLeft"
+        android:text="Reset" />
+
+</RelativeLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BluetoothTest</string>
+    <string name="action_settings">Settings</string>
+    <string name="Text">Status: -</string>
+    <string name="on">Turn On</string>
+    <string name="off">Turn Off</string>
+    <string name="List">List paired Devices</string>
+    <string name="Find">Search new Devices / Cancel</string>
+    <string-array name="country_arrays">
+    	<item>Malaysia</item>
+    	<item>United States</item>
+    	<item>France</item>
+    	<item>Italy</item>
+    	<item>Singapore</item>
+    	<item>New Zealand</item>
+    	<item>India</item>    
+    </string-array>
+    
+    <string-array name="application_array">
+    	<item>Registration (31)</item>
+    	<item>Configuration(32)</item>
+    	<item>ChannelPing(34)</item>
+    	<item>GCL(35)</item>
+    	<item>TaskDeliveryApp(36)</item>
+    	<item>DataLogger(37)</item>
+    	<item>Reprogramming(38)</item>
+    	<item>Diagnostics(40)</item>
+    	<item>CommServices(128)</item>
+    	<item>PowerManagement(129)</item>
+    	<item>DebugLogs(131)</item>
+    	<item>GpsManager(133)</item>
+    	<item>GSM(135)</item>
+    	<item>Iridium(136)</item>
+    	<item>Ethernet(137)</item>
+    	<item>DiagnosticAppReporting(139)</item>
+    	<item>TimeManager(142)</item>
+    	<item>DataloggerMonitor(143)</item>
+    	<item>HourMeter(148)</item>
+    	<item>PlatformCANServiceApp(150)</item>
+    	<item>QualcommLegacy(152)</item>
+    	<item>GSMNetworkSimulator(154)</item>
+    	<item>BreadcrumbsApp(172)</item>
+    	<item>WiFiAdapter(177)</item>
+    	<item>ConnectedDeviceProxyApp</item>
+    	<item>DebugInterface</item>
+    	<item>CANWANControl</item>
+    	<item>CDTestFramework</item>
+    	<item>Miscellaneous Commands</item>
+    </string-array>
+
+</resources>
